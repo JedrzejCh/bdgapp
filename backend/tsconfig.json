@@ -1,11 +1,16 @@
 {
     "compilerOptions": {
-      "outDir": "./dist/",
+      "outDir": "dist",
       "sourceMap": true,
       "noImplicitAny": true,
       "module": "commonjs",
-      "target": "es5",
-      "allowJs": true
+      "rootDir": "./",
+      "esModuleInterop": true,
+      "target": "ES2020",
+      "allowJs": true,
+      "skipLibCheck": true,
+      "alwaysStrict": true,
+      "lib": ["esnext"],
     },
     "exclude":[
       "node_modules"

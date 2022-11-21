@@ -1,46 +1,32 @@
-import * as bodyParser from "body-parser";
-import * as express from "express";
+import express, { Application } from "express";
+import bodyParser from "body-parser";
 import { Logger } from "./logger/logger";
 import Routes from "./routes/routes";
-const path = require('path');
+import errorMiddleware from './middlewares/error.middleware';
+import { MoongoseHandler } from "./database/moongose";
+
 
 class App {
-
-    public express: express.Application;
+    public app: Application;
     public logger: Logger;
-
-    // array to hold users
-    public users: any[];
-
+    private db = new MoongoseHandler()
     constructor() {
-        this.express = express();
-        this.middleware();
-        this.routes();
-        this.users = [];
+        this.app = express();
+        this.initMiddleware();
+        this.initErrorHandler();
         this.logger = new Logger();
     }
 
-    // Configure Express middleware.
-    private middleware(): void {
-        this.express.use(bodyParser.json());
-        this.express.use(bodyParser.urlencoded({ extended: false }));
-        this.express.use(express.static(process.cwd() + "/my-app/dist/"));
+
+    private initMiddleware(): void {
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(express.static(process.cwd() + "/backend/dist/"));
     }
 
-    private routes(): void {
-
-        this.express.get("/", (req, res, next) => {
-            res.sendFile(process.cwd() + "/my-app/dist/index.html");
-        });
-
-        // user route
-        this.express.use("/api", Routes);
-
-        // handle undefined routes
-        this.express.use("*", (req, res, next) => {
-            res.send("Make sure url is correct!");
-        });
-    }
+    private initErrorHandler() {
+		this.app.use(errorMiddleware);
+	}
 }
 
-export default new App().express;
+export default App;

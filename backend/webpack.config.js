@@ -16,7 +16,7 @@ module.exports = {
     extensions: ['.ts', '.js' ],
   },
   output: {
+    filename: 'api.bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'api.bundle.js'
   }
 };

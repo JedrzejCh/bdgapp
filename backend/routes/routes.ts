@@ -1,5 +1,5 @@
-import * as bodyParser from "body-parser";
-import * as express from "express";
+import express from "express";
+import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
 import User from "./user";
 
