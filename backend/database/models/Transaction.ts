@@ -10,11 +10,13 @@ const TransactionSchema: Schema = new Schema<ITransactionDB>(
     income: {type: Boolean, required: true},
     expenditure: {type: Boolean, required: false},
     date: {type: Date, required: false},
-    userID: {type: Types.ObjectId, required: true}
+    // userID: {type: Types.ObjectId, required: true}
+    userID: {type: Schema.Types.ObjectId, required: true}
   },
   {
     timestamps: true
   });
 
-export const Transaction = model<ITransactionDB>('User', TransactionSchema);
+const Transaction = model<ITransactionDB>('Transaction', TransactionSchema);
 
+export default Transaction;

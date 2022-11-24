@@ -1,11 +1,12 @@
 import express,{ Application } from 'express';
 import http, { Server } from 'http';
-import App from "./app";
-import { Logger } from "./logger/logger";
-import { port } from './config'
+import App from "../app";
+import { Logger } from "../logger/logger";
+import * as dotenv from 'dotenv';
 
 const application = new App();
 const app = application.app;
+dotenv.config();
 
 class WWWServer {
 
@@ -18,7 +19,7 @@ class WWWServer {
     constructor(app: Application) {
 			this.app = app;
 			// this.port = this.normalizePort(process.env.PORT || '3080');
-			this.port = this.normalizePort(port);
+			this.port = this.normalizePort(process.env.PORT);
 
 			this.initServer();
 			this.onInit();
@@ -29,7 +30,7 @@ class WWWServer {
 
 		private onInit() {
 			this.app.get('/', (req,res) => {
-				res.send("serwer działa");
+				res.send("Server is running");
 			})
 		}
     private initServer() {
@@ -44,7 +45,7 @@ class WWWServer {
 			try{
 				const addr = this.server.address();
 				const bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`;
-				this.logger.info(`Listening on ${bind}`);
+				this.logger.info(`Server is listening on ${bind}`);
 			} catch(err: any) {
 					this.logger.error(err.message)
 			}

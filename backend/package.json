@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts",
-    "start:dev": "nodemon index.ts",
+    "start": "ts-node ./bin/www.ts",
+    "start:dev": "nodemon ./bin/www.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint --project tsconfig.json --config tslint.json",
     "tslint-fix": "tslint --project tsconfig.json --config tslint.json --fix",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/mongoose": "^5.11.97",
+    "dotenv": "^16.0.3",
     "express": "4.17.1",
     "mongodb": "4.12",
     "mongoose": "6.7.2"
