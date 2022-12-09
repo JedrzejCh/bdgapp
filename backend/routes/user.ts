@@ -1,21 +1,18 @@
-import express from "express";
+import express, { Application, Router } from "express";
 import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
+import usersController from '../controllers/usersController';
+import { catchAsync } from '../middlewares/error.middleware';
 
-class User {
+class UsersRoute {
 
-    public express: express.Application;
+    public express: Application;
     public logger: Logger;
-
-    // array to hold users
-    public users: any[];
 
     constructor() {
         this.express = express();
         this.middleware();
         this.routes();
-        this.users = [];
-        this.logger = new Logger();
     }
 
     // Configure Express middleware.
@@ -25,32 +22,12 @@ class User {
     }
 
     private routes(): void {
-
-        // request to get all the users
-        this.express.get("/users", (req, res, next) => {
-            this.logger.info("url:" + req.url);
-            res.json(this.users);
-        });
-
-        // request to get all the users by userName
-        this.express.get("/users/:userName", (req, res, next) => {
-            this.logger.info("url:::::" + req.url);
-            const user = this.users.filter(function(user) {
-                if (req.params.userName === user.userName) {
-                    return user;
-                }
-            });
-            res.json(user);
-        });
-
-        // request to post the user
-        // req.body has object of type {firstName:"fnam1",lastName:"lnam1",userName:"username1"}
-        this.express.post("/user", (req, res, next) => {
-            this.logger.info("url:::::::" + req.url);
-            this.users.push(req.body.user);
-            res.json(this.users);
-        });
+        this.express.get('/', catchAsync(usersController.findAll));
+        this.express.get('/:slug', catchAsync(usersController.findOne));
+        this.express.post('/', catchAsync(usersController.create));
+        this.express.put('/:id', usersController.update);
+        this.express.delete('/:id', usersController.remove)
     }
 }
 
-export default new User().express;
+export default new UsersRoute().express;

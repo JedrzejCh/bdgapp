@@ -1,32 +1,38 @@
 import express, { Application } from "express";
 import bodyParser from "body-parser";
 import { Logger } from "./logger/logger";
-import Routes from "./routes/routes";
-import errorMiddleware from './middlewares/error.middleware';
+import {errorMiddleware, notFound} from './middlewares/error.middleware';
 import { MoongoseHandler } from "./database/moongose";
+import Routes from "./routes/routes";
 
 
 class App {
-    public app: Application;
+    public express: Application;
     public logger: Logger;
-    private db = new MoongoseHandler()
+    private db = new MoongoseHandler();
+
     constructor() {
-        this.app = express();
+        this.express = express();
+        this.routes();
         this.initMiddleware();
         this.initErrorHandler();
         this.logger = new Logger();
     }
 
-
     private initMiddleware(): void {
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: false }));
-        this.app.use(express.static(process.cwd() + "/backend/dist/"));
+        this.express.use(express.json());
+        this.express.use(express.urlencoded({ extended: false }));
+        this.express.use(express.static(process.cwd() + "/backend/dist/"));
     }
 
     private initErrorHandler() {
-		this.app.use(errorMiddleware);
+		this.express.use(errorMiddleware);
+        // this.express.use(notFound);
 	}
+
+    private routes() {
+        this.express.use("/api", Routes);
+    }
 }
 
 export default App;

@@ -3,6 +3,7 @@ import mongoose, { Document, Types } from "mongoose"
 
 export interface IUser {
   name: string;
+  surname: string;
   email: string;
   password: string;
   balance: number;

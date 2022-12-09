@@ -1,33 +1,29 @@
-import express from "express";
+import express, { Application } from "express";
 import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
-import User from "./user";
+import UsersRoute from "./user";
+
 
 class Routes {
 
-    public express: express.Application;
+    public express: Application;
     public logger: Logger;
 
-    // array to hold users
-    public users: any[];
-
     constructor() {
-        this.express = express();
-        this.middleware();
-        this.routes();
-        this.logger = new Logger();
+      this.express = express();
+      this.middleware();
+      this.initRoutes();
+      this.logger = new Logger();
     }
 
-    // Configure Express middleware.
     private middleware(): void {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     }
 
-    private routes(): void {
+    public initRoutes(): void {
+        this.express.use("/users", UsersRoute);
 
-        // user route
-        this.express.use("/", User);
     }
 }
 
