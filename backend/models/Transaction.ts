@@ -16,8 +16,8 @@ const TransactionSchema: Schema = new Schema<ITransactionDB>(
     timestamps: true
   });
 
-  // TransactionSchema.plugin(URLSlugs('date', {field: 'slug', update: true}));
+  TransactionSchema.plugin(URLSlugs('date', {field: 'slug', update: true}));
 
-const Transaction = model<ITransactionDB>('Transaction', TransactionSchema);
+const Transaction = model('Transaction', TransactionSchema);
 
 export default Transaction;

@@ -22,11 +22,17 @@ class UsersRoute {
     }
 
     private routes(): void {
-        this.express.get('/', catchAsync(usersController.findAll));
-        this.express.get('/:slug', catchAsync(usersController.findOne));
-        this.express.post('/', catchAsync(usersController.create));
-        this.express.put('/:id', usersController.update);
-        this.express.delete('/:id', usersController.remove)
+        // this.express.get('/', catchAsync(usersController.findAll));
+        // this.express.get('/:slug', catchAsync(usersController.findOne));
+        // this.express.post('/', catchAsync(usersController.create));
+        // this.express.put('/:slug', catchAsync(usersController.update));
+        // this.express.delete('/:slug', catchAsync(usersController.remove));
+
+        this.express.get('/', usersController.findAll);
+        this.express.get('/:slug', usersController.findOne);
+        this.express.post('/', usersController.create);
+        this.express.put('/:slug', usersController.update);
+        this.express.delete('/:slug', usersController.remove);
     }
 }
 

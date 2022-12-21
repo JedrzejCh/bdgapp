@@ -1,15 +1,13 @@
-
 import { IUser } from "../types";
 import { Schema, model } from 'mongoose';
 import URLSlugs from 'mongoose-url-slugs';
 
 
-const UserSchema: Schema = new Schema<IUser>(
-  {
+const UserSchema: Schema = new Schema<IUser>({
     name: {type: String, required: true},
     surname: {type: String, required: true},
     email: {type: String, required: true},
-    password: {type: String, required: false},
+    password: {type: String, required: true},
     balance: {type: Number, required: false}
   },
   {
