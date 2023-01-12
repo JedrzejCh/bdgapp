@@ -1,23 +1,29 @@
-
-import { ITransactionDB } from "../types";
-import mongoose, { Schema, model } from 'mongoose';
+import { ITransaction } from "../types";
+import mongoose, { Schema, model, Types } from 'mongoose';
 import URLSlugs from 'mongoose-url-slugs';
+import User from "./User";
+import { Timestamp } from "mongodb";
 
 
-const TransactionSchema: Schema = new Schema<ITransactionDB>(
+const TransactionSchema: Schema = new Schema<ITransaction>(
   {
+    _id: {type: Schema.Types.ObjectId, required: true, default: new Types.ObjectId()},
     value: {type: Number, required: true},
     income: {type: Boolean, required: true},
-    expenditure: {type: Boolean, required: false},
-    date: {type: Date, required: false},
-    userID: {type: Schema.Types.ObjectId, required: true}
+    expenditure: {type: Boolean, required: true},
+    date: {type: String, required: true},
+    userID: {type: Schema.Types.ObjectId, required: true, ref: User},
   },
   {
-    timestamps: true
-  });
+    timestamps: {
+        createdAt: false, 
+        updatedAt: true
+      }
+    }
+  );
 
-  TransactionSchema.plugin(URLSlugs('date', {field: 'slug', update: true}));
+  TransactionSchema.plugin(URLSlugs('_id', {field: 'slug', update: true}));
 
-const Transaction = model('Transaction', TransactionSchema);
+const Transaction = model<ITransaction>('Transaction', TransactionSchema);
 
 export default Transaction;

@@ -21,25 +21,19 @@ class WWWServer {
 		this.port = this.normalizePort(process.env.PORT || '3080');
 
 		this.initServer();
-		this.onInit();
 		this.app.set('port', this.port);
 		this.server.listen(this.port);
 		this.addListenersToServer();
     }
 
-	private onInit() {
-		this.app.get('/', (req,res) => {
-			res.send("Server is running");
-		})
+	private initServer() {
+		this.server = http.createServer(this.app)
 	}
 
-    private initServer() {
-      this.server = http.createServer(this.app)
-    }
-    private addListenersToServer() {
+	private addListenersToServer() {
 		this.server.on('listening', () => this.onServerListening());
 		this.server.on('error', () => this.onServerError.bind(this));
-    }
+	}
 
 	private onServerListening() {
 		try{

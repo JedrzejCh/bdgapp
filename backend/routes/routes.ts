@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
 import UsersRoute from "./user";
+import TransactionsRoute from "./transaction";
 
 
 class Routes {
@@ -10,10 +11,10 @@ class Routes {
     public logger: Logger;
 
     constructor() {
-      this.express = express();
-      this.middleware();
-      this.initRoutes();
-      this.logger = new Logger();
+        this.express = express();
+        this.middleware();
+        this.initRoutes();
+        this.logger = new Logger();
     }
 
     private middleware(): void {
@@ -23,7 +24,7 @@ class Routes {
 
     public initRoutes(): void {
         this.express.use("/users", UsersRoute);
-
+        this.express.use("/transactions", TransactionsRoute);
     }
 }
 
