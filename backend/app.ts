@@ -1,46 +1,45 @@
-import * as bodyParser from "body-parser";
-import * as express from "express";
+import express, { Application } from "express";
+import bodyParser from "body-parser";
 import { Logger } from "./logger/logger";
+import { MoongoseHandler } from "./database/moongose";
 import Routes from "./routes/routes";
-const path = require('path');
+import { errorMiddleware, notFound } from "./middlewares/error.middleware";
+
 
 class App {
-
-    public express: express.Application;
+    public express: Application;
     public logger: Logger;
-
-    // array to hold users
-    public users: any[];
+    private db = new MoongoseHandler();
 
     constructor() {
-        this.express = express();
-        this.middleware();
-        this.routes();
-        this.users = [];
-        this.logger = new Logger();
+			this.express = express();
+			this.onAppInit();
+			this.initMiddleware();
+			this.routes();
+			this.logger = new Logger();
+			this.initErrorHandler();
     }
 
-    // Configure Express middleware.
-    private middleware(): void {
-        this.express.use(bodyParser.json());
-        this.express.use(bodyParser.urlencoded({ extended: false }));
-        this.express.use(express.static(process.cwd() + "/my-app/dist/"));
+    private initMiddleware(): void {
+			this.express.use(bodyParser.urlencoded({extended: true}));
+			this.express.use(bodyParser.json());
+			this.express.use(express.static(process.cwd() + "/backend/dist/"));  
     }
 
-    private routes(): void {
+    private initErrorHandler() {
+			this.express.use(errorMiddleware);
+      this.express.use(notFound); 
+	}
 
-        this.express.get("/", (req, res, next) => {
-            res.sendFile(process.cwd() + "/my-app/dist/index.html");
-        });
+		private onAppInit() {
+			this.express.get('/', (req, res) => {
+				res.send("Application is up");
+			})
+		}
 
-        // user route
-        this.express.use("/api", Routes);
-
-        // handle undefined routes
-        this.express.use("*", (req, res, next) => {
-            res.send("Make sure url is correct!");
-        });
+    private routes() {
+			this.express.use("/api", Routes);
     }
 }
 
-export default new App().express;
+export default App;

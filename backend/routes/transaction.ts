@@ -1,10 +1,10 @@
 import express, { Application, Router } from "express";
 import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
-import usersController from '../controllers/usersController';
+import transactionsController from '../controllers/transactionsController';
 import { catchAsync } from '../middlewares/error.middleware';
 
-class UsersRoute {
+class TransactionsRoute {
 
     public express: Application;
     public logger: Logger;
@@ -21,12 +21,12 @@ class UsersRoute {
     }
 
     private routes(): void {
-			this.express.get('/', catchAsync(usersController.findAll));
-			this.express.get('/:slug', catchAsync(usersController.findOne));
-			this.express.post('/', catchAsync(usersController.create));
-			this.express.put('/:slug', catchAsync(usersController.update));
-			this.express.delete('/:slug', catchAsync(usersController.remove));
+			this.express.get('/', catchAsync(transactionsController.findAll));
+			this.express.get('/:slug', catchAsync(transactionsController.findOne));
+			this.express.post('/:slug', catchAsync(transactionsController.create));
+			this.express.put('/:slug', catchAsync(transactionsController.update));
+			this.express.delete('/:slug', catchAsync(transactionsController.remove));
     }
 }
 
-export default new UsersRoute().express;
+export default new TransactionsRoute().express;
