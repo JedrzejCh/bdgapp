@@ -17,9 +17,17 @@ export default {
 
   async login(request: RequestWithUser, response: Response): Promise<Response | void> {
 
-    const token = jwt.sign({ id: request.user._id }, process.env.JWT_SECRET, { expiresIn: 1200 });
+    const token = jwt.sign({ id: request.user._id }, process.env.JWT_SECRET_TOKEN, { expiresIn: 1200 });
+    const refreshToken = jwt.sign({ id: request.user._id }, process.env.JWT_REFRESH_SECRET_TOKEN, { expiresIn: 5600 });
 
     return response.send({ token })
+  },
+
+  async refreshToken(request: RequestWithUser, response: Response): Promise<Response | void> {
+
+    const refreshToken = request.body.token;
+
+    if (!refreshToken) return response.status(401);
   }
 
 }

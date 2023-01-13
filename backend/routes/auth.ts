@@ -11,19 +11,20 @@ class AuthRoute {
     public logger: Logger;
 
     constructor() {
-        this.express = express();
-        this.middleware();
-        this.routes();
+			this.express = express();
+			this.middleware();
+			this.routes();
     }
 
     private middleware(): void {
-        this.express.use(bodyParser.json());
-        this.express.use(bodyParser.urlencoded({ extended: false }));
+			this.express.use(bodyParser.json());
+			this.express.use(bodyParser.urlencoded({ extended: false }));
     }
 
     private routes(): void {
-        this.express.post('/login', passport.authenticate('local', { session: false }), catchAsync(authController.login));
-        this.express.post('/register', catchAsync(authController.register));
+			this.express.post('/login', passport.authenticate('local', { session: false }), catchAsync(authController.login));
+			this.express.post('/register', catchAsync(authController.register));
+			this.express.post('/refresh', catchAsync(authController.refreshToken));
     }
 }
 
