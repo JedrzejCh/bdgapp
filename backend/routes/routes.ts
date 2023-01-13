@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
 import UsersRoute from "./user";
 import TransactionsRoute from "./transaction";
-
+import AuthRoute from "./auth"
 
 class Routes {
 
@@ -25,6 +25,7 @@ class Routes {
     public initRoutes(): void {
         this.express.use("/users", UsersRoute);
         this.express.use("/transactions", TransactionsRoute);
+        this.express.use("/auth", AuthRoute);
     }
 }
 

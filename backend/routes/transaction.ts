@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { Logger } from "../logger/logger";
 import transactionsController from '../controllers/transactionsController';
 import { catchAsync } from '../middlewares/error.middleware';
+import jwtAuth from "../middlewares/passport.middleware";
 
 class TransactionsRoute {
 
@@ -21,11 +22,11 @@ class TransactionsRoute {
     }
 
     private routes(): void {
-			this.express.get('/', catchAsync(transactionsController.findAll));
-			this.express.get('/:slug', catchAsync(transactionsController.findOne));
-			this.express.post('/:slug', catchAsync(transactionsController.create));
-			this.express.put('/:slug', catchAsync(transactionsController.update));
-			this.express.delete('/:slug', catchAsync(transactionsController.remove));
+		this.express.get('/', jwtAuth, catchAsync(transactionsController.findAll));
+		this.express.get('/:slug', catchAsync(transactionsController.findOne));
+		this.express.post('/:slug', jwtAuth, catchAsync(transactionsController.create));
+		this.express.put('/:slug', catchAsync(transactionsController.update));
+		this.express.delete('/:slug', catchAsync(transactionsController.remove));
     }
 }
 

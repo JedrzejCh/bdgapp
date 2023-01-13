@@ -1,12 +1,10 @@
-import express,{ Application } from 'express';
+import { Application } from 'express';
 import http, { Server } from 'http';
 import App from "../app";
 import { Logger } from "../logger/logger";
-import * as dotenv from 'dotenv';
 
 const application = new App();
 const app = application.express;
-dotenv.config();
 
 class WWWServer {
 
