@@ -26,7 +26,6 @@ export default {
     const transaction = await new Transaction({
       value: request.body.value,
       income: request.body.income,
-      expenditure: request.body.expenditure,
       date: new Date().toLocaleString(),
       userID: foundUser._id,
     }).save();
@@ -41,7 +40,6 @@ export default {
 
     transaction.value = request.body.value,
     transaction.income = request.body.income,
-    transaction.expenditure = request.body.expenditure,
 
     await transaction.save();
 

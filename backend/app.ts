@@ -4,7 +4,10 @@ import { Logger } from "./logger/logger";
 import { MoongoseHandler } from "./database/moongose";
 import Routes from "./routes/routes";
 import { errorMiddleware, notFound } from "./middlewares/error.middleware";
+import passport from "./utils/passport";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 
 class App {
     public express: Application;
@@ -23,19 +26,20 @@ class App {
     private initMiddleware(): void {
 			this.express.use(bodyParser.urlencoded({extended: true}));
 			this.express.use(bodyParser.json());
-			this.express.use(express.static(process.cwd() + "/backend/dist/"));  
+			this.express.use(express.static(process.cwd() + "/backend/dist/"));
+			passport();
     }
 
     private initErrorHandler() {
-			this.express.use(errorMiddleware);
-      this.express.use(notFound); 
+		this.express.use(errorMiddleware);
+		this.express.use(notFound);
 	}
 
-		private onAppInit() {
-			this.express.get('/', (req, res) => {
-				res.send("Application is up");
-			})
-		}
+	private onAppInit() {
+		this.express.get('/', (req, res) => {
+			res.send("Application is up");
+		})
+	}
 
     private routes() {
 			this.express.use("/api", Routes);

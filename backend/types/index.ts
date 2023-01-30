@@ -1,4 +1,3 @@
-
 import { Request } from "express";
 import mongoose, { Document, Types } from "mongoose"
 
@@ -7,8 +6,9 @@ export interface IUser {
   name: string;
   surname: string;
   email: string;
-  password: string;
   balance: number;
+  goal: number;
+  limit: number;
   createdAt: string;
 }
 export interface ITransaction {
@@ -19,7 +19,6 @@ export interface ITransaction {
   date: string;
   userID: mongoose.ObjectId
 }
-
 export interface RequestWithUser extends Request {
 	user?: IUser;
 }
