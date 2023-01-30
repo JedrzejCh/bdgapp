@@ -7,6 +7,8 @@ export interface IUser {
   surname: string;
   email: string;
   balance: number;
+  goal: number;
+  limit: number;
   createdAt: string;
 }
 export interface ITransaction {

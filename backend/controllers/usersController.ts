@@ -25,6 +25,8 @@ export default {
         surname: request.body.surname,
         email: request.body.email,
         balance: request.body.balance,
+        goal: request.body.goal,
+        limit: request.body.limit,
         createdAt: new Date().toLocaleString()
     }).save();
 
@@ -39,6 +41,8 @@ export default {
     user.surname = request.body.surname,
     user.email = request.body.email,
     user.balance = request.body.balance
+    user.goal = request.body.goal
+    user.limit = request.body.limit
     await user.save();
 
     return response.status(200).send({ data: user, message: `User was updated`});

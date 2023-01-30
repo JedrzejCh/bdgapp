@@ -15,6 +15,8 @@ const UserSchema: Schema = new Schema<IUser>({
       trim: true
     },
     balance: {type: Number, required: false, default: 0},
+    goal: {type: Number, required: false, default: 0},
+    limit: {type: Number, required: false, default: 0},
     createdAt: {type: String, required: true},
   },
   {
