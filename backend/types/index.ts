@@ -15,7 +15,8 @@ export interface ITransaction {
   _id: mongoose.ObjectId;
   value: number;
   income: boolean;
-  expenditure: boolean;
+  category: string;
+  description: string;
   date: string;
   userID: mongoose.ObjectId
 }

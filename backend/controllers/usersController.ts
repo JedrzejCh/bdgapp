@@ -40,9 +40,9 @@ export default {
     user.name = request.body.name,
     user.surname = request.body.surname,
     user.email = request.body.email,
-    user.balance = request.body.balance
-    user.goal = request.body.goal
-    user.limit = request.body.limit
+    user.balance = request.body.balance,
+    user.goal = request.body.goal,
+    user.limit = request.body.limit,
     await user.save();
 
     return response.status(200).send({ data: user, message: `User was updated`});

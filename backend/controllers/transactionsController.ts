@@ -26,6 +26,8 @@ export default {
     const transaction = await new Transaction({
       value: request.body.value,
       income: request.body.income,
+      category: request.body.category,
+      description: request.body.description,
       date: new Date().toLocaleString(),
       userID: foundUser._id,
     }).save();
@@ -40,6 +42,8 @@ export default {
 
     transaction.value = request.body.value,
     transaction.income = request.body.income,
+    transaction.category = request.body.category,
+    transaction.description = request.body.description,
 
     await transaction.save();
 
