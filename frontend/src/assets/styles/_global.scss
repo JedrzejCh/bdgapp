@@ -1,11 +1,18 @@
+@import 'colors';
+* {
+	box-sizing: border-box;
+  vertical-align: baseline;
+}
 body {
-  background-color: #F1F5F9;
-  @apply min-h-screen;
   margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+	font-size: 1.6rem;
   line-height: 1;
+	overflow-wrap: break-word;
+	background-color: $base-background-color;
+	overflow: h;
+}
+html {
+	font-size: 62.5%;
 }
