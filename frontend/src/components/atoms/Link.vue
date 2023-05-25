@@ -1,5 +1,5 @@
 <template>
-  <a :href="href" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+  <a :href="href" :class="{'is-light': light}" class="flex items-center p-3 text-gray-900 font-medium rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
     <span v-text="text"></span>
   </a>
 </template>
@@ -16,11 +16,21 @@ export default {
     href: {
       type: String,
       required: true
+    },
+    light: {
+      type: Boolean,
+      required: false
     }
   },
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+ @import "@/assets/styles/colors"; 
+.is-light {
+  color: $base-dark-color;
+  &:hover {
+    color: $base-light-color;
+  }
+}
 </style>

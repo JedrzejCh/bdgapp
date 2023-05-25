@@ -5,9 +5,14 @@
             <a @click="openDropdown">
               <Icon name="user-round"/>
             </a>
-               <Dropdown :handleOpen="isHidden" :buttonVisible="isDropdownWithButton">
-                <Link :href="link.href" :text="link.text"/>
-                <Link #separated :href="link2.href" :text="link2.text"/>
+               <Dropdown :handleOpen="isOpen" :buttonVisible="isDropdownWithButton">
+                <template #main>
+                  <Link :light="true" :href="link.href" :text="link.text"/>
+                  <Link :light="true" :href="link3.href" :text="link3.text"/>
+                </template>
+                <template #separated>
+                  <Link :light="true" :href="link2.href" :text="link2.text"/>
+                </template>
                </Dropdown>
           </div>
       </div>
@@ -15,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineComponent, ref } from 'vue';
+  import { ref } from 'vue';
   import Dropdown from '@/components/molecules/Dropdown.vue';
   import Link from '@/components/atoms/Link.vue';
   const isDropdownWithButton = false;
@@ -27,11 +32,16 @@
       text: 'wyloguj',
       href: '#'
     }
-  const isHidden = ref(true);
+  const link3 = {
+      text: 'transakcje',
+      href: '#'
+    }
+  const isOpen = ref(false);
 
   const openDropdown = () => {
-    // console.log(isHidden.value)
-    isHidden.value = !isHidden.value;
+    if (!isDropdownWithButton) {
+      isOpen.value = !isOpen.value;
+    }
   } 
   
 </script>

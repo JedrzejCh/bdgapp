@@ -67,8 +67,5 @@ aside {
       left: 0;
   }
 }
- 
-  
-  
 
 </style>
